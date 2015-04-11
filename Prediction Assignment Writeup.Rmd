@@ -1,14 +1,14 @@
 
 ---
 title: “Practical Machine Learning Prediction Assignment Writeup”
----
+
 author: "Al Ford"
----
+
 output: html_document
 ---
 
 
-# Get and clean data
+## Get and clean data
 
 Read the training data into a data table.
 
@@ -26,7 +26,7 @@ url <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
 DTest <- fread(url)
 ```
 
-Variables without any missing values on the test dataset will be **predictor candidates**.
+Take variables without any missing values as **predictor candidates**.
 
 ```{r}
 isAnyMissing <- sapply(DTest, function (x) any(is.na(x) | x == ""))
@@ -35,7 +35,7 @@ predCandidates <- names(isAnyMissing)[isPredictor]
 predCandidates
 ```
 
-Subset the primary dataset to include only the **predictor candidates** and the outcome variable, `classe`.
+Subset the primary dataset with **predictor candidates** and the outcome variable, `classe`.
 
 ```{r}
 varToInclude <- c("classe", predCandidates)
@@ -44,14 +44,14 @@ dim(D)
 names(D)
 ```
 
-Make `classe` into a factor.
+Make `classe` into a factor
 
 ```{r}
 D <- D[, classe := factor(D[, classe])]
 D[, .N, classe]
 ```
 
-Split the dataset into a 60% training and 40% probing dataset.
+Split the dataset into a 60% training and 40% probing dataset
 
 ```{r}
 require(caret)
@@ -62,7 +62,7 @@ DTrain <- D[inTrain[[1]]]
 DProbe <- D[-inTrain[[1]]]
 ```
 
-Preprocess the prediction variables by centering and scaling.
+Preprocess variables by centering and scaling
 
 ```{r}
 X <- DTrain[, predCandidates, with=FALSE]
@@ -72,7 +72,7 @@ XCS <- predict(preProc, X)
 DTrainCS <- data.table(data.frame(classe = DTrain[, classe], XCS))
 ```
 
-Apply the centering and scaling to the probing dataset.
+Apply centering and scaling to the probing dataset
 
 ```{r}
 X <- DProbe[, predCandidates, with=FALSE]
@@ -80,14 +80,14 @@ XCS <- predict(preProc, X)
 DProbeCS <- data.table(data.frame(classe = DProbe[, classe], XCS))
 ```
 
-Check for near zero variance.
+Check for near zero variance
 
 ```{r}
 nzv <- nearZeroVar(DTrainCS, saveMetrics=TRUE)
 if (any(nzv$nzv)) nzv else message("No variables with near zero variance")
 ```
 
-Examine groups of prediction variables.
+Examine groups of prediction variables
 
 ```{r histGroup}
 histGroup <- function (data, regex) {
@@ -114,7 +114,7 @@ histGroup(DTrainCS, "forearm")
 ```
 
 
-# Build the prediction model
+## Build the prediction model
 
 Set up the parallel clusters.
 
@@ -166,24 +166,21 @@ varImp(trainingModel)
 trainingModel$finalModel
 ```
 
-**The estimated error rate is less than 1%.**
-
 Save training model
 
 ```{r}
 save(trainingModel, file="trainingModel.RData")
 ```
 
+Predict the test data
 
-# Predict the test data
-
-Load the training model.
+Load the training model
 
 ```{r}
 load(file="trainingModel.RData", verbose=TRUE)
 ```
 
-Get predictions and evaluate.
+Get predictions and evaluate
 
 ```{r}
 DTestCS <- predict(preProc, DTest[, predCandidates, with=FALSE])
@@ -192,7 +189,7 @@ DTest <- cbind(hat , DTest)
 subset(DTest, select=names(DTest)[grep("belt|[^(fore)]arm|dumbbell|forearm", names(DTest), invert=TRUE)])
 ```
 
-# Submit the answers
+## Submit the answers
 
 ```{r}
 pml_write_files = function(x){
