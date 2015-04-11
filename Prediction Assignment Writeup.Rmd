@@ -1,6 +1,6 @@
 # Practical-Machine-Learning
 ---
-title: 'Coursera: Practical Machine Learning Prediction Assignment'
+title: 'Coursera: Practical Machine Learning Prediction Assignment Writeup'
 author: "Al Ford [GitHub](https://github.com/alfords)"
 output:
   html_document:
