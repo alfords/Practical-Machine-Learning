@@ -4,7 +4,8 @@ title: “Practical Machine Learning Prediction Assignment Writeup”
 
 author: "Al Ford"
 
-output: html_document
+output: "html_document"
+
 ---
 
 
@@ -114,7 +115,7 @@ histGroup(DTrainCS, "forearm")
 ```
 
 
-## Build the prediction model
+## Build and test the prediction model
 
 Set up the parallel clusters.
 
