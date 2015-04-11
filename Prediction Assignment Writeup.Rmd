@@ -1,7 +1,9 @@
 
 ---
 title: “Practical Machine Learning Prediction Assignment Writeup”
+---
 author: "Al Ford"
+---
 output: html_document
 ---
 
@@ -190,7 +192,7 @@ DTest <- cbind(hat , DTest)
 subset(DTest, select=names(DTest)[grep("belt|[^(fore)]arm|dumbbell|forearm", names(DTest), invert=TRUE)])
 ```
 
-## Submit the answers
+# Submit the answers
 
 ```{r}
 pml_write_files = function(x){
