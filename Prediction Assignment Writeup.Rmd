@@ -1,6 +1,7 @@
 # Practical-Machine-Learning
+
 ---
-title: 'Coursera: Practical Machine Learning Prediction Assignment Writeup'
+title: “Practical Machine Learning Prediction Assignment Writeup”
 author: "Al Ford [GitHub](https://github.com/alfords)"
 output: html_document
 date: "2015-04-10"
