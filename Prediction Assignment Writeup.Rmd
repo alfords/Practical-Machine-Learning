@@ -9,7 +9,7 @@ output: "html_document"
 ---
 
 
-## Get and clean data
+## 1. Get and clean data
 
 Read the training data into a data table.
 
@@ -115,7 +115,7 @@ histGroup(DTrainCS, "forearm")
 ```
 
 
-## Build and test the prediction model
+## 2. Build and test the prediction model
 
 Set up the parallel clusters.
 
@@ -190,7 +190,7 @@ DTest <- cbind(hat , DTest)
 subset(DTest, select=names(DTest)[grep("belt|[^(fore)]arm|dumbbell|forearm", names(DTest), invert=TRUE)])
 ```
 
-## Submit the answers
+## 3. Submit the answers
 
 ```{r}
 pml_write_files = function(x){
